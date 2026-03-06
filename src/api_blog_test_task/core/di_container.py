@@ -11,7 +11,8 @@ from api_blog_test_task.infrastructure.di_providers import (
     DatabaseProvider,
     MappersProvider,
     DBRepositoriesProvider,
-    CacheProvider
+    CacheProvider,
+    CacheRepositoriesProvider,
 )
 
 log = logging.getLogger(__name__)
@@ -26,8 +27,9 @@ def setup_dependencies(
         DatabaseProvider(settings.infrastructure.database),
         MappersProvider(),
         DBRepositoriesProvider(),
-        PostsServiceProvider(),
+        PostsServiceProvider(hits_threshold=settings.infrastructure.cache.hits_threshold),
         CacheProvider(settings.infrastructure.cache),
+        CacheRepositoriesProvider(settings.infrastructure.cache),
         MappersServiceProvider()
     )
 

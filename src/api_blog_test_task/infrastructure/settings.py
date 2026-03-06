@@ -61,6 +61,9 @@ class RedisSettings(BaseSettings):
     port: Optional[int] = 6379
     password: Optional[str] = None
     db: int = 0
+    post_ttl: int = 300  # SEC
+    hits_ttl: int = 300  # SEC
+    hits_threshold: int = 10  # View threshold for cache
 
     @property
     def url(self) -> str:

@@ -12,7 +12,12 @@ from api_blog_test_task.application.interfaces.services.mappers import IPostsSer
 from api_blog_test_task.application.interfaces.services import IPostsService
 from api_blog_test_task.application.services import PostsService
 
+
 class PostsServiceProvider(Provider):
+    def __init__(self, hits_threshold: int, scope=None, component=None):
+        super().__init__(scope, component)
+        self._hits_threshold: int = hits_threshold
+
     @provide(scope=Scope.REQUEST)
     def posts_service(
             self,
@@ -22,4 +27,4 @@ class PostsServiceProvider(Provider):
             mapper: IPostsServiceMapper,
             transaction_manager: ITransactionManager,
     ) -> IPostsService:
-        return PostsService(repository, cache, cache_mapper, mapper, transaction_manager)
+        return PostsService(repository, cache, cache_mapper, mapper, transaction_manager, self._hits_threshold)

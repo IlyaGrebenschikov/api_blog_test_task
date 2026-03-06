@@ -9,10 +9,10 @@ from api_blog_test_task.application.types import CachedPostType
 
 
 class PostsCacheRepository(IPostsCacheRepository):
-    def __init__(self, cache_client: Redis):
+    def __init__(self, cache_client: Redis, post_ttl: int = 300, hits_ttl: int = 300):
         self.cache = cache_client
-        self.post_ttl = 300
-        self.hits_ttl = 300
+        self.post_ttl = post_ttl
+        self.hits_ttl = hits_ttl
 
     def _post_key(self, post_id: UUID) -> str:
         return f"post:{post_id}"
