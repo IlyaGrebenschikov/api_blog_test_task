@@ -10,6 +10,7 @@ from sqlalchemy import (
     select,
     insert,
     update,
+    exists
 )
 
 from api_blog_test_task.application.interfaces.database.repositories import IPostsRepository
@@ -49,3 +50,8 @@ class PostsRepository(IPostsRepository):
         clause = self._model.id == post_id
         stmt = delete(self._model).where(clause).returning(self._model)
         return self._mapper.persistence_to_domain((await self._session.execute(stmt)).scalars().first())
+
+    async def exists_post(self, post_id: UUID) -> bool:
+        clause = self._model.id == post_id
+        stmt = exists(select(self._model).where(clause)).select()
+        return await self._session.scalar(stmt)
