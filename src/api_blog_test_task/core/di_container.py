@@ -5,6 +5,7 @@ from dishka.integrations.fastapi import setup_dishka
 from fastapi import FastAPI
 
 from .settings import Settings
+from api_blog_test_task.application.di_providers.services import PostsServiceProvider
 from api_blog_test_task.infrastructure.di_providers import (
     DatabaseProvider,
     MappersProvider,
@@ -23,6 +24,7 @@ def setup_dependencies(
         DatabaseProvider(settings.infrastructure.database),
         MappersProvider(),
         RepositoriesProvider(),
+        PostsServiceProvider(),
     )
 
     setup_dishka(container=container, app=app)
