@@ -1,4 +1,5 @@
 from .http_exceptions import (
+    AppException,
     UnAuthorizedError,
     NotFoundError,
     BadRequestError,
@@ -10,6 +11,7 @@ from .http_exceptions import (
 )
 
 __all__ = (
+    "AppException",
     "UnAuthorizedError",
     "NotFoundError",
     "BadRequestError",
