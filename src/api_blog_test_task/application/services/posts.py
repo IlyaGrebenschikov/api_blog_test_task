@@ -36,11 +36,12 @@ class PostsService(IPostsService):
 
     async def get_post(self, post_id: UUID) -> ResponsePostDTO:
         async with self._transaction_manager:
-            result = await self._repository.get_post(post_id)
 
-            if not result:
+            if not await self._repository.exists_post(post_id):
                 log.warning("Post not found: %s", post_id)
                 raise NotFoundError(f"Post with ID: '{post_id}' not found")
+
+            result = await self._repository.get_post(post_id)
 
         log.info("Post received with ID: %s", result.id)
         return self._mapper.domain_to_response_dto(result)
