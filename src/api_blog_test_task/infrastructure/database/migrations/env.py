@@ -7,7 +7,7 @@ from sqlalchemy.ext.asyncio import async_engine_from_config
 
 from alembic import context
 
-from api_blog_test_task.infrastructure.database.models import BaseModel, PostModel
+from api_blog_test_task.infrastructure.database.models import BaseModel, PostModel  # noqa: F401
 from api_blog_test_task.infrastructure.settings import load_database_settings
 
 db_settings = load_database_settings()

@@ -14,10 +14,13 @@ RUN pip install --no-cache-dir uv
 
 COPY ./pyproject.toml ./uv.lock ./
 RUN uv venv -p 3.13 \
-    && uv sync --all-extras --no-install-project
+    && uv sync --all-extras --no-install-project \
+    && uv sync --all-extras --group dev --no-install-project
 COPY ./src ./src
 COPY ./README.md ./
-RUN uv sync --all-extras --no-editable
+COPY ./tests ./tests
+RUN uv sync --all-extras --no-editable \
+    && uv sync --all-extras --group dev --no-editable
 
 COPY alembic.ini ./
 

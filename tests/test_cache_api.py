@@ -1,7 +1,7 @@
 import pytest
 from uuid import uuid4
 
-from httpx import AsyncClient, ASGITransport
+from httpx import AsyncClient
 
 
 @pytest.fixture(scope="function")

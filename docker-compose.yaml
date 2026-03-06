@@ -1,6 +1,6 @@
 services:
   postgres:
-    profiles: ["api", "migrations"]
+    profiles: ["api", "migrations", "test"]
     image: postgres:latest
     container_name: blog.api.pg
     restart: unless-stopped
@@ -23,7 +23,7 @@ services:
       - .env
 
   redis:
-    profiles: [ "api" ]
+    profiles: [ "api", "test" ]
     image: redis:latest
     container_name: blog.api.redis
     restart: unless-stopped
@@ -71,6 +71,21 @@ services:
     networks:
       - blog.api.network
     command: ["uv", "run", "alembic", "upgrade", "head"]
+    env_file:
+      - .env
+
+  test:
+    profiles: [ "test" ]
+    image: api_blog_test_task-api:latest
+    container_name: api.test
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - blog.api.network
+    command: ["uv", "run", "pytest", "tests/test_cache_api.py", "-v"]
     env_file:
       - .env
 

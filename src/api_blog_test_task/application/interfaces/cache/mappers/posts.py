@@ -1,5 +1,4 @@
 from typing import Protocol
-from uuid import UUID
 
 from api_blog_test_task.application.dto import ResponsePostDTO
 from api_blog_test_task.application.types import CachedPostType

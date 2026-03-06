@@ -3,7 +3,6 @@ from __future__ import annotations
 from contextlib import asynccontextmanager
 from types import TracebackType
 from typing import (
-    AsyncContextManager,
     AsyncIterator,
     Optional,
     Type,
