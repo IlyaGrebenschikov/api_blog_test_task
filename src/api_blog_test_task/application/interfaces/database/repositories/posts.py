@@ -1,0 +1,14 @@
+from typing import Protocol
+from uuid import UUID
+
+from api_blog_test_task.application.types import CreatePostType, UpdatePostType
+from api_blog_test_task.domain.entities import Post
+
+class IPostsRepository(Protocol):
+    async def create_post(self, data: CreatePostType) -> Post: ...
+
+    async def update_post(self, post_id: UUID, data: UpdatePostType) -> Post: ...
+
+    async def get_post(self, post_id: UUID) -> Post: ...
+
+    async def delete_post(self, post_id: UUID) -> Post: ...
