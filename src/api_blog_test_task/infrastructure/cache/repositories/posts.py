@@ -5,6 +5,8 @@ from uuid import UUID
 from redis.asyncio import Redis
 
 from api_blog_test_task.application.interfaces.cache.repositories import IPostsCacheRepository
+from api_blog_test_task.application.types import CachedPostType
+
 
 class PostsCacheRepository(IPostsCacheRepository):
     def __init__(self, cache_client: Redis):
@@ -18,11 +20,11 @@ class PostsCacheRepository(IPostsCacheRepository):
     def _hits_key(self, post_id: UUID) -> str:
         return f"post:hits:{post_id}"
 
-    async def get_post(self, post_id: UUID) -> Optional[dict]:
+    async def get_post(self, post_id: UUID) -> Optional[CachedPostType]:
         data = await self.cache.get(self._post_key(post_id))
-        return json.loads(data) if data else None
+        return json.loads(data) if data else None  # type: ignore[return-value]
 
-    async def set_post(self, post_id: UUID, post_data: dict) -> None:
+    async def set_post(self, post_id: UUID, post_data: CachedPostType) -> None:
         await self.cache.setex(
             self._post_key(post_id),
             self.post_ttl,

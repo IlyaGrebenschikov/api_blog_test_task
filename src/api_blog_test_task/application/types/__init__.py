@@ -1,3 +1,3 @@
-from .posts import CreatePostType, UpdatePostType
+from .posts import CreatePostType, CachedPostType, UpdatePostType
 
-__all__ = ("CreatePostType", "UpdatePostType")
+__all__ = ("CreatePostType", "CachedPostType", "UpdatePostType")

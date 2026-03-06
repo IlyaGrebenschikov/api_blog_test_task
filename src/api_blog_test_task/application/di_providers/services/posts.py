@@ -4,23 +4,22 @@ from dishka import (
     provide
 )
 
+from api_blog_test_task.application.interfaces.cache.mappers import IPostsCacheMapper
+from api_blog_test_task.application.interfaces.cache.repositories import IPostsCacheRepository
 from api_blog_test_task.application.interfaces.database import ITransactionManager
 from api_blog_test_task.application.interfaces.database.repositories import IPostsRepository
 from api_blog_test_task.application.interfaces.services.mappers import IPostsServiceMapper
 from api_blog_test_task.application.interfaces.services import IPostsService
-from api_blog_test_task.application.services.mappers import PostsServiceMapper
 from api_blog_test_task.application.services import PostsService
 
 class PostsServiceProvider(Provider):
-    @provide(scope=Scope.APP)
-    def posts_service_mapper(self) -> IPostsServiceMapper:
-        return PostsServiceMapper()
-
     @provide(scope=Scope.REQUEST)
-    def users_service(
+    def posts_service(
             self,
             repository: IPostsRepository,
+            cache: IPostsCacheRepository,
+            cache_mapper: IPostsCacheMapper,
             mapper: IPostsServiceMapper,
             transaction_manager: ITransactionManager,
     ) -> IPostsService:
-        return PostsService(repository, mapper, transaction_manager)
+        return PostsService(repository, cache, cache_mapper, mapper, transaction_manager)
