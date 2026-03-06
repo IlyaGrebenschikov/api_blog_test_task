@@ -1,6 +1,6 @@
 from .cache import CacheProvider
 from .database import DatabaseProvider
 from .mappers import MappersProvider
-from .repositories import RepositoriesProvider
+from .db_repositories import DBRepositoriesProvider
 
-__all__ = ("CacheProvider", "DatabaseProvider", "MappersProvider", "RepositoriesProvider")
+__all__ = ("CacheProvider", "DatabaseProvider", "MappersProvider", "DBRepositoriesProvider")

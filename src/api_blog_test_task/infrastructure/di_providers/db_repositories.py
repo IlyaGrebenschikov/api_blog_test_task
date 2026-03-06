@@ -6,7 +6,7 @@ from api_blog_test_task.application.interfaces.database.mappers import IPostsRep
 from api_blog_test_task.infrastructure.database.repositories import PostsRepository
 from api_blog_test_task.infrastructure.database.models import PostModel
 
-class RepositoriesProvider(Provider):
+class DBRepositoriesProvider(Provider):
     @provide(scope=Scope.REQUEST)
     def posts_repository(
             self,

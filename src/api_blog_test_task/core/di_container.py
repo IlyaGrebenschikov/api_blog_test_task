@@ -9,7 +9,7 @@ from api_blog_test_task.application.di_providers.services import PostsServicePro
 from api_blog_test_task.infrastructure.di_providers import (
     DatabaseProvider,
     MappersProvider,
-    RepositoriesProvider,
+    DBRepositoriesProvider,
     CacheProvider
 )
 
@@ -24,7 +24,7 @@ def setup_dependencies(
     container = make_async_container(
         DatabaseProvider(settings.infrastructure.database),
         MappersProvider(),
-        RepositoriesProvider(),
+        DBRepositoriesProvider(),
         PostsServiceProvider(),
         CacheProvider(settings.infrastructure.cache)
     )
