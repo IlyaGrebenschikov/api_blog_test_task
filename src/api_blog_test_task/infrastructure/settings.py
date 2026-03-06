@@ -49,10 +49,35 @@ class UvicornServerSettings(BaseSettings):
     port: Optional[int] = 8080
 
 
+class RedisSettings(BaseSettings):
+    model_config = SettingsConfigDict(
+        env_file=f".env",
+        env_file_encoding="utf-8",
+        env_prefix="REDIS_",
+        extra="ignore",
+    )
+
+    host: Optional[str] = "0.0.0.0"
+    port: Optional[int] = 6379
+    password: Optional[str] = None
+    db: int = 0
+
+    @property
+    def url(self) -> str:
+        return (
+            f"redis://"
+            f"{f'{self.password}@' if self.password else ''}"
+            f"{self.host}:"
+            f"{self.port}/"
+            f"{self.db}"
+        )
+
+
 @dataclass
 class InfrastructureSettings:
     database: DatabaseSettings
     server: UvicornServerSettings
+    cache: RedisSettings
 
 
 def load_database_settings(database_settings: Optional[DatabaseSettings] = None,) -> DatabaseSettings:
@@ -62,9 +87,11 @@ def load_database_settings(database_settings: Optional[DatabaseSettings] = None,
 def load_infrastructure_settings(
         database_settings: Optional[DatabaseSettings] = None,
         server_settings: Optional[UvicornServerSettings] = None,
+        cache_settings: Optional[RedisSettings] = None,
     ) -> InfrastructureSettings:
     log.info("Loading infrastructure settings.")
     return InfrastructureSettings(
         database=database_settings or DatabaseSettings(),
         server=server_settings or UvicornServerSettings(),
+        cache=cache_settings or RedisSettings(),
     )

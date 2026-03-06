@@ -9,7 +9,8 @@ from api_blog_test_task.application.di_providers.services import PostsServicePro
 from api_blog_test_task.infrastructure.di_providers import (
     DatabaseProvider,
     MappersProvider,
-    RepositoriesProvider
+    RepositoriesProvider,
+    CacheProvider
 )
 
 log = logging.getLogger(__name__)
@@ -25,6 +26,7 @@ def setup_dependencies(
         MappersProvider(),
         RepositoriesProvider(),
         PostsServiceProvider(),
+        CacheProvider(settings.infrastructure.cache)
     )
 
     setup_dishka(container=container, app=app)

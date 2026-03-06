@@ -10,6 +10,7 @@ dependencies = [
     "dishka>=1.8.0",
     "fastapi>=0.135.1",
     "pydantic-settings>=2.13.1",
+    "redis>=7.2.1",
     "sqlalchemy>=2.0.48",
     "uvicorn>=0.41.0",
 ]
