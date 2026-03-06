@@ -4,4 +4,19 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.14"
-dependencies = []
+dependencies = [
+    "alembic>=1.18.4",
+    "asyncpg>=0.31.0",
+    "dishka>=1.8.0",
+    "fastapi>=0.135.1",
+    "pydantic-settings>=2.13.1",
+    "sqlalchemy>=2.0.48",
+    "uvicorn>=0.41.0",
+]
+
+[project.scripts]
+api = "api_blog_test_task.__main__:main"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
