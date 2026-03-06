@@ -93,6 +93,7 @@ class PostsService(IPostsService):
             result = await self._repository.delete_post(post_id)
 
         await self._cache.delete_post(post_id)
+        await self._cache.delete_hits(post_id)
 
         log.info("Post deleted with ID: %s", result.id)
         return self._mapper.domain_to_response_dto(result)

@@ -34,6 +34,9 @@ class PostsCacheRepository(IPostsCacheRepository):
     async def delete_post(self, post_id: UUID) -> None:
         await self.cache.delete(self._post_key(post_id))
 
+    async def delete_hits(self, post_id: UUID) -> None:
+        await self.cache.delete(self._hits_key(post_id))
+
     async def increment_hits(self, post_id: UUID) -> int:
         result = await self.cache.incr(self._hits_key(post_id))
         await self.cache.expire(self._hits_key(post_id), self.hits_ttl)
